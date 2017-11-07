@@ -47,7 +47,10 @@ public class User implements Serializable {
         return action;
     }
 
-    public void setAction(int dateCoef, int quantityOfMess) {
+    public void setAction(int dateCoef, int quantityOfMess) throws InvalidDataInputException {
+        if (dateCoef + quantityOfMess < 0){
+            throw new InvalidDataInputException("Error in Action !");
+        }
         this.action = dateCoef + quantityOfMess;
     }
 

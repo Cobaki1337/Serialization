@@ -41,7 +41,13 @@ public class CreaterOfUsers {
             System.out.println("Enter the password ...");
             users[i].setPassword(in.next());
 
-            users[i].setAction(totalDateToday - dates[i].getTotalDate(), users[i].getCountMess());
+            try {
+                users[i].setAction(totalDateToday - dates[i].getTotalDate(), users[i].getCountMess());
+            }catch (InvalidDataInputException e){
+                System.out.println(e);
+                System.out.println(e.getExceptionMessage());
+                return;
+            }
         }
 
         System.out.println("Serializable or not?" + '\n' + " 1: Yes." + '\n' + " 2: No.");

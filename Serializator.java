@@ -1,13 +1,11 @@
 package by.gsu.laba3;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 public class Serializator {
 
     public static final String FILE_NAME = "Users.txt";
+    ObjectOutputStream os = null;
 
     public static void serialization(User[] users){
 
@@ -16,8 +14,12 @@ public class Serializator {
             for (int i = 0; i < users.length; i ++){
                 os.writeObject(users[i]);
             }
-        }catch (Exception ex){
-            ex.printStackTrace();
+        }catch (FileNotFoundException ex){
+            System.err.println("File is not found: " + ex);
+        }catch (NotSerializableException ex){
+            System.err.println("Class is not serializable: " + ex);
+        }catch (IOException ioe){
+            System.err.println(ioe);
         }
     }
 
@@ -32,8 +34,10 @@ public class Serializator {
                 u[i] = (User) is.readObject();
             }
 
-        }catch (Exception ex){
+        }catch (FileNotFoundException | NotSerializableException |ClassNotFoundException ex){
             ex.printStackTrace();
+        }catch (IOException ioe) {
+            System.err.println(ioe);
         }
 
         for (int i = 0; i < size; i ++){
